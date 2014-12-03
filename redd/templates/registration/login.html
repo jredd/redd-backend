@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Redd Login{% endblock %}
+
+{% block nav %}{% endblock nav %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4 col-md-offset-4 panel panel-default authentication_panel">
+        <form class="margin-base-vertical" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+            {% csrf_token %}
+            <fieldset>
+            <legend>LOGIN</legend>
+            {% if form.errors %}
+                <small class="login_failure">Your username and password didn't match. Please try again.</small>
+            {% endif %}
+            <div class="form-group">
+                <label>EMAIL</label>
+                 <p class="input-group text-center ">
+                    <span class="input-group-addon glyphicon glyphicon-user"><span class="icon-envelope"></span></span>
+                    <input type="text" class="form-control input-lg" id="id_username" name="username" placeholder="User Name" required/>
+                </p>
+            </div>
+            <div class="form-group">
+                <label>PASSWORD</label>
+                 <p class="input-group text-center">
+{#                    <span class="input-group-addon glyphicon glyphicon-cog"><span class="icon-envelope"></span></span>#}
+                    <span class="input-group-addon glyphicon glyphicon-lock"><span class="icon-envelope"></span></span>
+                    <input type="password" class="form-control input-lg" id="id_password" name="password" placeholder="Password" required/>
+                </p>
+                <small class="login_link">Forgot your <a href="{% url 'password_reset' %}">password?</a>
+                    Do you need to <a href="{% url 'register' %}">Register?</a> </small>
+            </div>
+            <p class="text-center">
+                <button type="submit" class="btn btn-sister-tan btn-lg">LOGIN</button>
+            </p>
+{#            <input type="hidden" name="next" value="{{ next }}" />#}
+            </fieldset>
+        </form>
+    </div><!-- //col -->
+</div><!-- //row -->
+{% endblock %}

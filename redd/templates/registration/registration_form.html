@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Sign up{% endblock %}
+
+{% block nav %}{% endblock nav %}
+{% block content %}
+<div class="row top-buffer">
+    <div class="col-md-4 col-md-offset-4 panel panel-default page_login">
+        <form  method="POST" action="" class="margin-base-vertical wide">
+            {% csrf_token %}
+            <fieldset>
+                <legend>REGISTRATION</legend>
+                {% if form.errors %}
+                    <p class="error_list">Please correct the errors below: {{ form.non_field_errors }}</p>
+                {% endif %}
+                <!-- User creation field by email -->
+                <div class="form-group">
+                    <label>EMAIL</label>
+                    <p class="input-group text-center ">
+                        <span class="input-group-addon glyphicon glyphicon-user"><span class="icon-envelope"></span></span>
+                        <input type="text" class="form-control input-lg" id="id_email" name="email" placeholder="email@example.com" autofocus=""/>
+                    </p>
+                    {% if form.email.errors %}
+                        <small class="error_list">{{ form.email.errors.as_text }}</small>
+                    {% endif %}
+                </div>
+                <!-- Password field -->
+                <div class="form-group">
+                    <label>PASSWORD</label>
+                     <p class="input-group text-center">
+                        <span class="input-group-addon glyphicon glyphicon-lock"><span class="icon-envelope"></span></span>
+                        <input type="password" class="form-control input-lg" id="id_password1" name="password1" placeholder="password" />
+                    </p>
+                    {% if form.password1.errors %}
+                        <small class="error_list">{{ form.password1.errors.as_text }}</small>
+                    {% endif %}
+                </div>
+                <!-- Password confirm field -->
+                <div class="form-group">
+                    <label>CONFIRM PASSWORD</label>
+                     <p class="input-group text-center ">
+                        <span class="input-group-addon glyphicon glyphicon-lock"><span class="icon-envelope"></span></span>
+                        <input type="password" class="form-control input-lg" id="id_password2" name="password2" placeholder="confirm password" />
+                    </p>
+                    {% if form.password2.errors %}
+                        <small class="error_list">{{ form.password2.errors.as_text }}</small>
+                    {% endif %}
+{#                {{ form.errors }}#}
+                </div>
+                <!-- Submit button -->
+                <p class="submit text-center">
+                    <input type="submit" class="btn btn-sister-red btn-lg" value="REGISTER &rarr;">
+                </p>
+            </fieldset>
+        </form>
+    </div><!-- //col -->
+</div><!-- //row -->
+{% endblock %}
+
+{% block content-related %}
+<div class="row top-buffer">
+    <div class="col-md-4 col-md-offset-4 panel panel-default page_login">
+        <p>Fill out the form to the left (all fields are required), and your
+        account will be created; you'll be sent an email with instructions on how
+        to finish your registration.
+        </p>
+
+        <p>We'll only use your email to send you signup instructions. We hate spam
+        as much as you do
+        </p>
+
+        <p>This account will let you log into the ticket tracker, claim tickets,
+        and be exempt from spam filtering.
+        </p>
+    </div><!-- //col -->
+</div><!-- //row -->
+{% endblock %}

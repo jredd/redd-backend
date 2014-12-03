@@ -1,0 +1,12 @@
+{% autoescape off %}
+{{ user.email }} you're receiving this e-mail because the administrator at {{ domain }} has activated your account.
+
+Click the link below to login.
+
+{% block reset_link %}{{ protocol }}://{{ domain }}{% url 'login' %}{% endblock %}
+
+Please login to Sister admin to activate this user.
+
+The SISTER registration system.
+
+{% endautoescape %}

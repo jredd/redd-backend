@@ -1,0 +1,429 @@
+{% extends 'base.html' %}
+{#{% load require %}#}
+{% load static %}
+
+{% block title %}Sister Reports{% endblock title %}
+
+{% block css %}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="{% static "reports/css/app.css" %}" />
+    <link rel="stylesheet" href="{% static "reports/css/main_reports.css" %}" />
+
+{% endblock %}
+
+{% block scripts %}
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">google.load('visualization', '1.0', {'packages':['corechart']});</script>
+{% endblock scripts %}
+
+{% block right_nav %}
+<li><a href="#" class="dealer-select">Choose Dealer</a></li>
+{% endblock %}
+
+{% block content %}
+<!-- #####################################
+				Loading Screen
+	######################################## -->
+	<div id="loading"><img src="{% static "reports/img/loading.gif" %}" /></div>
+
+
+
+<!-- #####################################
+				Load Dashboard Dialog
+	######################################## -->
+	<div id="dialog" class="hidden dialog">
+		<div id="dialogBox">
+			<h4>Load Dashboard</h4>
+			<select id="loadableDashes" data-bind="options:$root.savedDashboards(), optionsText:'name'"></select>
+			<button class="radius" id="btnOk" data-bind="click:loadDashboard">Load</button>
+			<button class="gray radius" id="btnDialogCancel" data-bind="click:cancelDialog">Cancel</button>
+		</div>
+		<div id="dialogUnderlay"></div>
+	</div>
+<!-- #####################################
+				Load Search Dialog
+	######################################## -->
+        <div id="dealersearch" class="dialog hidden">
+            <div id="dialogBox">
+                <h4>See Dealer Reports</h4>
+                <form>
+			        <input type="text" id="dealerInput" placeholder="Type dealer name or dealer id to see dealer list..." autofocus/>
+                    <button class="radius" id="btnOk"  data-bind="click:loadDealer">Load</button>
+                    <button class="gray radius" id="btnDialogCancel" data-bind="click:cancelSearch">Cancel</button>
+                </form>
+
+            </div>
+            <div id="dialogUnderlay"></div>
+        </div>
+
+
+<!-- #####################################
+				Header
+	######################################## -->
+	<div class="row ">
+		<div class="large-12 columns">
+
+			<div id="printDates">
+				<label>
+					<span data-bind="text:dealerName"></span> Date range:
+					<span data-bind="text:formatStartDate()"></span> to
+					<span data-bind="text:formatEndDate()"></span>
+					<span></span>
+				</label>
+			</div>
+{#			<div class="right">#}
+{#				<p class="right login-name" data-bind="text:loginMessage"></p>#}
+{#				<div class="clearfix"/>#}
+{#				<a href="#" class="right sign-out hidden">Sign Out</a>#}
+{#				<div class="clearfix"></div>#}
+{#				<a href="#" class="dealer-select right hidden">Choose a dealer</a>#}
+{#			</div>#}
+		</div>
+	</div>
+
+<!-- #####################################
+				Dashboard Navigation
+	######################################## -->
+	<div class="row">
+		<div class="large-12 columns" style="padding-left:0;">
+			<ul id="dashboardNav">
+				<!-- ko foreach: dashboards -->
+					<!-- ko if:active -->
+					<li class="dash-tab active" data-bind="text:name, click:function(data,event){ rename($index(),data,event) }"></li>
+					<!-- /ko -->
+					<!-- ko ifnot:active -->
+					<li class="dash-tab" data-bind="text:name, click: function(data,event){ $root.setActiveDashboard($index()) }"></li>
+					<!-- /ko -->
+				<!-- /ko -->
+				<li data-bind="click:$root.addDashboard">+</li>
+			</ul>
+		</div>
+	</div>
+
+
+	<div data-bind="foreach:dashboards">
+		<!-- ko if:active -->
+		<div class="row">
+			<div class="large-3 columns" id="sideNav">
+				<ul id="navUl">
+					<li class="ui-state-default date-ranges">
+						<div class="row">
+							<div class="large-8 columns">
+								<label>Start Date</label>
+								<input type="text" data-bind="datepicker:$root.startDate, datepickerOptions: { minDate: new Date(2013,9,1), maxDate: new Date() }" />
+								<label>End Date</label>
+								<input type="text" data-bind="datepicker:$root.endDate, datepickerOptions: { maxDate: new Date() }" />
+							</div>
+						</div>
+					</li>
+					<li class="ui-state-default">
+						<ul>
+							<li class="lbl lbl-charts"><label>Charts<a href="#" class="show-hide-dd up"></a></label></li>
+							<li><a href="#" data-bind="click:addChart">New</a></li>
+						</ul>
+					</li>
+					<li class="ui-state-default">
+						<ul>
+							<li class="lbl lbl-dash"><label>Dashboard<a href="#" class="show-hide-dd up"></a></label></li>
+							<li><a href="#" data-bind="click:$root.addDashboard">New</a></li>
+							<!-- ko if:$root.savedDashboards().length > 0 -->
+								<li><a href="#" data-bind="click:$root.loadDashboardDialog">Load</a></li>
+							<!-- /ko -->
+							<!--<li><a href="#" data-bind="click:$root.loadDashboardDialog">Load</a></li>-->
+							<li><a href="#" data-bind="click:$root.saveDashboard">Save</a></li>
+							<li><a href="#" data-bind="click:$root.removeDashboard">Close</a></li>
+							<!--<li><a href="#" data-bind="click:$root.toggleEditDisplay">Edit</a></li>-->
+						</ul>
+					</li>
+					<li class="ui-state-default">
+						<ul>
+							<li class="lbl lbl-report"><label>Report<a href="#" class="show-hide-dd up"></a></label></li>
+							<li><a href="#" data-bind="click:$root.printDb">Print</a></li>
+							<!-- <li><a href="#">Download</a></li> -->
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<div class="large-9 columns" id="dashToolbar">
+				<div id="viewDashboard">
+
+					<!-- #####################################
+									Video Details Table
+						######################################## -->
+					<!-- ko foreach:tables -->
+					<h4 class="subheader" data-bind="text:name"></h4>
+					<table class="search-table">
+						<thead>
+							<tr>
+								<th>Image</th>
+								<th>Title</th>
+								<!-- <th>Vin</th> -->
+								<th class="hide-for-small">Published</th>
+								<th><center>Views<br /><span class="subheader">(DateRange)</span></center></th>
+								<th><center>Views<br /><span class="subheader">(All)</span></center></th>
+								<th><center>Total<br />Searches</center></th>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- ko foreach:rows -->
+
+								<!-- ko if:active -->
+								<tr class="tr-row active" data-bind="click:disableRow">
+									<td> <img class="vehicle-thumb" data-bind="attr:{src:imgUrl}" /></td>
+									<td>
+										<label class="lbl-title" data-bind="text:title"></label>
+										<!-- ko foreach:searchTermsAllTime -->
+											<label class="secondary-header" data-bind="text:$data[0] + ','"></label>
+										<!-- /ko -->
+									</td>
+									<!-- <td data-bind="text:vin"></td> -->
+									<td class="hide-for-small" data-bind="text:published"></td>
+									<td><center><strong data-bind="text:viewsDateRange"></strong></center></td>
+									<td><center><strong data-bind="text:viewsAllTime"></strong></center></td>
+									<td><center><label data-bind="text:searchTermsAllTime().length"></label></center></td>
+								</tr>
+
+								<tr class="inner-row">
+									<td colspan="6">
+										<div class="row">
+											<div class="large-5 columns">
+												<video controls style="width:100%;">
+												  <source type="video/mp4"  data-bind="attr:{src:videoUrl}">
+												</video>
+											</div>
+											<div class="large-7 columns search terms">
+												<label>Search Terms (Date Range)</label>
+												<ol>
+													<!-- ko foreach: searchTermsDateRange -->
+													<li data-bind="text:$data[0]"></li>
+													<!-- /ko -->
+												</ol>
+												<label>Search Terms (All Time)</label>
+												<ol>
+													<!-- ko foreach: searchTermsAllTime -->
+													<li data-bind="text:$data[0]"></li>
+													<!-- /ko -->
+												</ol>
+											</div>
+										</div>
+										<div class="row">
+											<div class="large-12 columns">
+												<label>Description</label>
+												<p data-bind="text:description"></p>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<!-- /ko -->
+
+
+								<!-- ko ifnot:active -->
+								<tr class="tr-row" data-bind="click:$parent.enableRow">
+									<td> <img class="vehicle-thumb" data-bind="attr:{src:imgUrl}" /></td>
+									<td>
+										<label class="lbl-title" data-bind="text:title"></label>
+										<!-- ko foreach:searchTermsAllTime -->
+											<label class="secondary-header" data-bind="text:$data[0] + ','"></label>
+										<!-- /ko -->
+									</td>
+									<!-- <td data-bind="text:vin"></td> -->
+									<td class="hide-for-small" data-bind="text:published"></td>
+									<td><center><strong data-bind="text:viewsDateRange"></strong></center></td>
+									<td><center><strong data-bind="text:viewsAllTime"></strong></center></td>
+									<td><center><label data-bind="text:searchTermsAllTime().length"></label></center></td>
+								</tr>
+								<!-- /ko -->
+
+
+							<!-- /ko -->
+						</tbody>
+					</table>
+					<!-- /ko -->
+
+
+
+
+
+
+
+					<!-- #####################################
+									Search Terms Table
+						######################################## -->
+					<!-- ko foreach:searchTermTables -->
+					<h4 class="subheader" data-bind="text:name"></h4>
+					<table class="search-table">
+						<thead>
+							<tr>
+								<th>Search Term</th>
+								<th><center>Total Views<br /><span class="subheader">(DateRange)</span></center></th>
+								<th><center>Total Views<br /><span class="subheader">(All)</span></center></th>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- ko foreach:rows -->
+
+								<!-- ko if:active -->
+								<tr class="tr-row active" data-bind="click:disableRow">
+									<td>
+										<label data-bind="text:formattedTitle()"></label>
+										<!-- ko foreach:cars -->
+											<label class="secondary-header" data-bind="text:$data[0] + ','"></label>
+										<!-- /ko -->
+									</td>
+									<!-- <td data-bind="text:vin"></td> -->
+									<td><center><strong data-bind="text:searchTermsDateRange"></strong></center></td>
+									<td><center><strong data-bind="text:searchTermsAllTime"></strong></center></td>
+								</tr>
+
+								<tr class="inner-row">
+									<td colspan="3">
+										<div class="row">
+											<div class="large-12 columns">
+												<!-- ko foreach:cars -->
+												<label><span data-bind="text:$data[0]"></span> (Vin #:<span data-bind="text:$data[1]"></span>) has been viewed <strong data-bind="text:$parent.searchTermsAllTime"></strong> time(s) from these Search Terms.</label>
+												<!-- /ko -->
+											</div>
+										</div>
+									</td>
+								</tr>
+								<!-- /ko -->
+
+
+								<!-- ko ifnot:active -->
+								<tr class="tr-row" data-bind="click:$parent.enableRow">
+									<td>
+										<label data-bind="text:formattedTitle()"></label>
+										<!-- ko foreach:cars -->
+											<label class="secondary-header" data-bind="text:$data[0] + ','"></label>
+										<!-- /ko -->
+									</td>
+									<!-- <td data-bind="text:vin"></td> -->
+									<td><center><strong data-bind="text:searchTermsDateRange"></strong></center></td>
+									<td><center><strong data-bind="text:searchTermsAllTime"></strong></center></td>
+								</tr>
+								<!-- /ko -->
+
+
+							<!-- /ko -->
+						</tbody>
+					</table>
+					<!-- /ko -->
+
+
+
+
+
+
+
+
+
+					<!-- #####################################
+									Charts
+						######################################## -->
+					<ul id="sortable" data-bind="foreach:charts, event:{change:$root.drawCharts()}">
+						<li class="ui-state-default" data-bind="css:{active:editing}">
+							<!--<a href="#" data-bind="click:$parent.removeChart">Remove Chart</a>-->
+
+
+							<!-- #####################################
+											Edit Chart Table
+								######################################## -->
+							<!-- ko if:editing -->
+							<div class="row edit-chart-container" data-bind="event:{change:$root.drawCharts}">
+								<div class="large-12 columns">
+									<h4 class="edit-chart-header subheader">Chart Editing Panel</h4>
+									<!--<button class="radius secondary expand" data-bind="click:editChart">Done</button>-->
+
+									<div class="row">
+										<div class="large-12 columns">
+											<label>Title:</label>
+											<input type="text" placeholder="Chart Name" data-bind="value:name" />
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="large-12 columns">
+											<label>Chart Type:</label>
+											<select data-bind="options:$root.chartTypes, value:chartType"></select>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="large-12 columns">
+											<label>Display Value:</label>
+											<select data-bind="options:$root.displayTypes, value:labelStyle"></select>
+										</div>
+									</div>
+
+									<table class="data-sets-table">
+										<thead>
+											<tr>
+												<th>Data Set</th>
+												<th>Total</th>
+												<th>Color</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody data-bind="foreach:dataSets">
+											<tr data-bind="style:{background:color()[1]}">
+												<td><select data-bind="options:$root.data, value:data, optionsText:'title'"></select></td>
+												<td class="ttl-val"><span class="row-value" data-bind="text:value()"></span></td>
+												<!--<td><select data-bind="options:$root.colors, value:color"></select></td>-->
+												<td><select data-bind="options:$root.colors, value:color"></select></td>
+												<td><a href="#" class="close-data-set" data-bind="click:$parent.removeDataSet"></a></td>
+											</tr>
+										</tbody>
+										<tfoot>
+											<tr>
+												<td colspan="4" style="padding-left:0px;"><a href="#" data-bind="click:addDataSet">+ Data Set</a></td>
+											</tr>
+										</tfoot>
+									</table>
+									<button class="radius secondary expand" data-bind="click:editChart">Done</button>
+								</div>
+							</div>
+							<!-- /ko -->
+
+
+							<!-- #####################################
+											Chart
+								######################################## -->
+							<div class="chart-container">
+								<!--<a class="chart-menu details" href="#"></a>-->
+								<a class="chart-menu edit" href="#" data-bind="click:editChart"></a>
+								<a class="chart-menu remove" href="#" data-bind="click:$parent.removeChart"></a>
+								<div class="google-chart" data-bind="attr:{'id':getId($index())}">Chart</div>
+
+
+								<!-- #####################################
+												Custom Legend
+									######################################## -->
+
+								<div class="legend-wrapper">
+									<ul class="legend">
+										<!-- ko foreach:dataSets -->
+										<li><div class="legend-block" data-bind="style:{background:color()[1]}"></div><label data-bind="text:title"></label></li>
+										<!-- /ko -->
+									</ul>
+								</div>
+
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- /ko -->
+	</div>
+
+	<div class="row">
+		<div class="large-12 columns">
+			<div id="footerLogo">
+            <p class="text-right">powered by  <img src="{{STATIC_URL}}/img/sister-logo.png" width="100" style="margin-left: 5px"></p>
+			</div>
+		</div>
+	</div>
+{#	{% require_module "require" %}#}
+    <script data-main="scripts/start" src="{% static "js/plugins/jquery.validate.js" %}"></script>
+    <script data-main="scripts/start" src="{% static "js/start.js" %}"></script>
+{% endblock %}

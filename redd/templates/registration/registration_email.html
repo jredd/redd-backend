@@ -1,0 +1,8 @@
+{% autoescape off %}
+You're receiving this e-mail because {{ user.email }} has requested registration activation.
+
+Please login to Sister admin to activate this user.
+{% block reset_link %}{{ protocol }}://{{ domain }}{% url 'admin:index' %}{% endblock %}
+
+The Sister registration system.
+{% endautoescape %}

@@ -1,0 +1,1 @@
+{% autoescape off %}User activation for {{ domain }}{% endautoescape %}
