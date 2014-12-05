@@ -11,8 +11,6 @@
     <script type="text/javascript" src="{{STATIC_URL}}js/libs/jquery-1.11.1.js"></script>
 
     {% block css %}{% endblock css %}
-{#    <script type="text/javascript" src="//use.typekit.net/zdg0jtk.js"></script>#}
-{#    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>#}
 </head>
 <body>
 <div class="wrapper">
@@ -29,7 +27,6 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="{% url 'home' %}">REDD</a>
-{#            <a class="navbar-brand" href="{% url 'home' %}">SiSTeR</a>#}
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -55,13 +52,7 @@
 </nav>
 {% endblock nav %}
 
-<header>
-    {% block header %}
-        <p>
-{#        <img src="{{STATIC_URL}}img/sister-logo.png">#}
-        </p>
-    {% endblock header %}
-</header>
+
 <div class="container">
     {% block content %}{% endblock content %}
 </div>
@@ -71,17 +62,8 @@
 </footer>
 
     <!-- -----SCRIPTS----- -->
-{#    <script type="text/javascript" src="{{STATIC_URL}}js/base/bootstrap.min.js"></script>#}
+    <script type="text/javascript" src="{{STATIC_URL}}js/libs/bootstrap.min.js"></script>
     {% block scripts %}{% endblock scripts %}
 </div>
-{#<script type="text/javascript">#}
-{#  (function(d) {#}
-{#    var config = {#}
-{#      kitId: 'zdg0jtk',#}
-{#      scriptTimeout: 3000#}
-{#    },#}
-{#    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)#}
-{#  })(document);#}
-{#</script>#}
 </body>
 </html>

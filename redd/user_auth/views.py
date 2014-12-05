@@ -85,7 +85,6 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         """Lists all the info for the given user"""
         user = self.kwargs['pk']
-        # log.info('{} has requests user information'.format(user))
         return CustomUser.objects.filter(email=user)
 
 

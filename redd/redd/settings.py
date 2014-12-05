@@ -50,9 +50,10 @@ INSTALLED_APPS = (
     # 'require',
 
     # Local Apps
+
+    'core',
+    'tracker',
     'user_auth',
-    # 'tracker',
-    # 'core',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -94,7 +95,7 @@ DATABASES = {
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
         # 'rest_framework.authentication.OAuth2Authentication',
     )
