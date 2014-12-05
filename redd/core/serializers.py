@@ -24,6 +24,7 @@ class DepartmentSerializer(serializers.ModelSerializer):
             'id',
             'name',
             'date_created',
+            'is_active',
             'created_by',
             'project',
         )
