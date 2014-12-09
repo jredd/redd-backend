@@ -65,16 +65,26 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 )
-
-CORS_ORIGIN_WHITELIST = (
-        'localhost:63343',
-        # 'http://localhost',
-        # 'http://127.0.0.1:8000/',
-        # 'http://127.0.0.1:8000',
-    )
-# CORS_ORIGIN_ALLOW_ALL = True
+#
+# CORS_ORIGIN_WHITELIST = (
+#         'http://localhost/',
+#         # 'localhost',
+#         'localhost:80',
+#         'localhost',
+#         'http://localhost:80',
+#         'http://localhost:6080',
+#         'localhost:8888',
+#         'http://localhost:9080',
+#         'http://localhost:7080',
+#         # 'http://localhost',
+#         # 'http://127.0.0.1:8000/',
+#         # 'http://127.0.0.1:8000',
+#     )
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'redd.urls'
 
@@ -84,13 +94,21 @@ AUTH_USER_MODEL = 'user_auth.CustomUser'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
-DATABASES = {
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': str(PROJECT_ROOT / 'db.sqlite3'),
+#     }
+# }
+CACHE_MIDDLEWARE_ALIAS = 'default'
+CACHE_MIDDLEWARE_SECONDS = 100
+
+CACHES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': str(PROJECT_ROOT / 'db.sqlite3'),
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': 'localhost:11211',
     }
 }
-
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -157,3 +175,9 @@ STATICFILES_STORAGE = 'require.storage.OptimizedStaticFilesStorage'
 # EMAIL_HOST_USER = 'sister@sister.tv'
 # DEFAULT_FROM_EMAIL = 'sister@sister.tv'
 # SERVER_EMAIL = 'sister@sister.tv'
+
+
+try:
+    from local_settings import *
+except:
+    pass
