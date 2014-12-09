@@ -101,7 +101,7 @@ AUTH_USER_MODEL = 'user_auth.CustomUser'
 #     }
 # }
 CACHE_MIDDLEWARE_ALIAS = 'default'
-CACHE_MIDDLEWARE_SECONDS = 100
+CACHE_MIDDLEWARE_SECONDS = 25
 
 CACHES = {
     'default': {
