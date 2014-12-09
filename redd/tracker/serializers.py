@@ -6,9 +6,9 @@ from . import models
 
 
 class AssetSerializer(serializers.ModelSerializer):
-    project = serializers.StringRelatedField()
+    # project = serializers.StringRelatedField()
     # project = serializers.PrimaryKeyRelatedField(many=True)
-    current_department = serializers.StringRelatedField(many=True)
+    # current_department = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = models.Asset

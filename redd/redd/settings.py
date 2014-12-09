@@ -98,7 +98,21 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
         # 'rest_framework.authentication.OAuth2Authentication',
-    )
+    ),
+    # 'PAGINATE_BY': 10,
+    # 'PAGINATE_BY_PARAM': 'page_size',
+    # 'MAX_PAGINATE_BY': 100,
+    # 'DEFAULT_PAGINATION_SERIALIZER_CLASS':
+    #     'rest_framework_ember.pagination.EmberPaginationSerializer',
+    # 'DEFAULT_PARSER_CLASSES': (
+    #     'rest_framework_ember.parsers.EmberJSONParser',
+    #     'rest_framework.parsers.FormParser',
+    #     'rest_framework.parsers.MultiPartParser'
+    # ),
+    # 'DEFAULT_RENDERER_CLASSES': (
+    #     'rest_framework_ember.renderers.JSONRenderer',
+    #     'rest_framework.renderers.BrowsableAPIRenderer',
+    # ),
 }
 
 LOGIN_REDIRECT_URL = 'admin:index'

@@ -24,14 +24,9 @@ class DepartmentList(generics.ListCreateAPIView):
     queryset = models.Department.objects.all()
     serializer_class = serializers.DepartmentSerializer
     permission_classes = (permissions.IsAuthenticated,)
-    # serializer_class = serializers.DepartmentSerializer(queryset, many=True)
 
-    # def get_queryset(self):
-    #     print self.kwargs
-    #     name = self.kwargs['name']
-    #     owner = self.kwargs['owner']
-    #     project = self.kwargs['project']
-    #
-    #     print name, owner, project
-    #
-    #     return models.Department.objects.all()
+
+class DepartmentDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.Department.objects.all()
+    serializer_class = serializers.DepartmentSerializer
+    permission_classes = (permissions.IsAuthenticated,)

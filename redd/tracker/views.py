@@ -11,3 +11,9 @@ class AssetList(generics.ListCreateAPIView):
     queryset = models.Asset.objects.all()
     serializer_class = serializers.AssetSerializer
     permission_classes = (permissions.IsAuthenticated,)
+
+
+class AssetDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.Asset.objects.all()
+    serializer_class = serializers.AssetSerializer
+    permission_classes = (permissions.IsAuthenticated,)

@@ -6,5 +6,6 @@ from django.conf.urls import patterns, url
 from . import views
 
 urlpatterns = patterns('',
-                       url(r'asset-list/$', views.AssetList.as_view()),
+                       url(r'assets/$', views.AssetList.as_view()),
+                       url(r'assets/(?P<pk>[0-9]+)/$', views.AssetDetail.as_view()),
                       )
