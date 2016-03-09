@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
+from django.views.generic import TemplateView
 from django.contrib import admin
 from rest_framework.authtoken import views as rest_views
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
@@ -21,6 +22,7 @@ from custom_user.views import register, registration_done#, ObtainToken
 
 
 urlpatterns = [
+    url(r'^$', TemplateView.as_view(template_name='index.html')),
     url(r'^admin/', admin.site.urls),
 
     # REST FRAMEWORK
@@ -31,8 +33,8 @@ urlpatterns = [
     url(r'^api-token-auth/', obtain_jwt_token),
     url(r'^api-token-refresh/', refresh_jwt_token),
 
-    url(r'^projects/', include('projects.url', namespace='projects')),
-    url(r'^departments/', include('departments.url', namespace='departments')),
-    url(r'^tasks/', include('tasks.url', namespace='tasks')),
-    url(r'^clients/', include('clients.url', namespace='clients')),
+    url(r'^projects/$', include('projects.url', namespace='projects')),
+    url(r'^departments/$', include('departments.url', namespace='departments')),
+    url(r'^tasks/$', include('tasks.url', namespace='tasks')),
+    url(r'^clients/$', include('clients.url', namespace='clients')),
 ]

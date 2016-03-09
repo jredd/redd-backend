@@ -6,6 +6,7 @@ from django.db import models
 from projects.models import Project
 from departments.models import Department
 
+
 class Asset(models.Model):
 
     name = models.CharField('name', max_length=80, unique=True, blank=True)

@@ -96,7 +96,7 @@ JWT_LEEWAY = 60
 WSGI_APPLICATION = 'redd.wsgi.application'
 
 SITE_ID = 1
-
+APEND_SLASH = True
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
