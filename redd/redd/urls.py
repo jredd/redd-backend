@@ -33,8 +33,8 @@ urlpatterns = [
     url(r'^api-token-auth/', obtain_jwt_token),
     url(r'^api-token-refresh/', refresh_jwt_token),
 
-    url(r'^projects/$', include('projects.url', namespace='projects')),
-    url(r'^departments/$', include('departments.url', namespace='departments')),
-    url(r'^tasks/$', include('tasks.url', namespace='tasks')),
-    url(r'^clients/$', include('clients.url', namespace='clients')),
+    url(r'^projects/', include('projects.url', namespace='projects')),
+    url(r'^departments/', include('departments.url', namespace='departments')),
+    url(r'^tasks/', include('tasks.url', namespace='tasks')),
+    url(r'^clients/', include('clients.url', namespace='clients')),
 ]
