@@ -41,12 +41,13 @@ INSTALLED_APPS = [
 
     # 'corsheaders',
     'rest_framework',
-    # 'rest_framework',
+
     'custom_user',
-    # 'tasks',
-    # 'projects',
-    # 'departments',
-    # 'assets',
+    'tasks',
+    'projects',
+    'departments',
+    'assets',
+    'clients',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -89,6 +90,7 @@ REST_FRAMEWORK = {
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
 }
+
 AUTH_USER_MODEL = 'custom_user.CustomUser'
 JWT_ALLOW_REFRESH = True
 JWT_LEEWAY = 60

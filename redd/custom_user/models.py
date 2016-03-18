@@ -11,6 +11,10 @@ from django.db import models
 
 from rest_framework.authtoken.models import Token
 
+from tasks.models import Task
+from departments.models import Department
+from projects.models import Project
+
 
 class CustomUserManager(BaseUserManager):
 
@@ -59,12 +63,19 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
                                                 'Unselect this instead of deleting accounts.'))
 
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
-    #token = Token.objects.create(user=)
 
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
+
+    salary = models.IntegerField(default=0)
+    wage = models.IntegerField(default=0)
+    # average_task_completion_time =
+    current_assignments = models.ManyToManyField(Task)
+    departments = models.ManyToManyField(Department)
+    projects = models.ManyToManyField(Project)
+    avatar = models.ImageField(upload_to='/avatars', null=True, blank=True)
 
     class Meta:
         verbose_name = _('user')

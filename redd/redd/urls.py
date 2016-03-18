@@ -25,14 +25,11 @@ urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='index.html')),
     url(r'^admin/', admin.site.urls),
 
-    # REST FRAMEWORK
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^api-token-auth/', rest_views.obtain_auth_token),
-
     #JWT Tokens
     url(r'^api-token-auth/', obtain_jwt_token),
     url(r'^api-token-refresh/', refresh_jwt_token),
 
+    # Applications
     url(r'^projects/', include('projects.url', namespace='projects')),
     url(r'^departments/', include('departments.url', namespace='departments')),
     url(r'^tasks/', include('tasks.url', namespace='tasks')),
