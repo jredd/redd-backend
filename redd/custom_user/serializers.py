@@ -15,8 +15,13 @@ class UserSerializer(serializers.ModelSerializer):
                   'is_active',
                   'is_staff',
                   'date_joined',
-                  'dealer_permissions',
                   'is_superuser',
+                  'salary',
+                  'wage',
+                  'current_assignments',
+                  'departments',
+                  'projects',
+                  'avatar'
                   # 'groups',
         )
 

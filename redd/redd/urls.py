@@ -29,9 +29,11 @@ urlpatterns = [
     url(r'^api-token-auth/', obtain_jwt_token),
     url(r'^api-token-refresh/', refresh_jwt_token),
 
+    url(r'^users/', include('custom_user.urls', namespace='custom_user')),
+
     # Applications
-    url(r'^projects/', include('projects.url', namespace='projects')),
-    url(r'^departments/', include('departments.url', namespace='departments')),
-    url(r'^tasks/', include('tasks.url', namespace='tasks')),
-    url(r'^clients/', include('clients.url', namespace='clients')),
+    url(r'^projects/', include('projects.urls', namespace='projects')),
+    url(r'^departments/', include('departments.urls', namespace='departments')),
+    url(r'^tasks/', include('tasks.urls', namespace='tasks')),
+    url(r'^clients/', include('clients.urls', namespace='clients')),
 ]

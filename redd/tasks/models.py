@@ -12,6 +12,7 @@ from assets.models import Asset, SubAsset
 class Task(models.Model):
 
     name = models.CharField('name', max_length=80, unique=True, blank=True)
+    date_created = models.DateTimeField('date created', auto_now_add=True)
     date_assigned = models.DateTimeField('date assigned', auto_now_add=True)
     is_active = models.BooleanField(default=True)
     created_by = models.ForeignKey(User, related_name='task_creator', verbose_name='Owner')

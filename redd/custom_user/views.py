@@ -91,12 +91,12 @@ class UsersList(generics.ListCreateAPIView):
     queryset = CustomUser.objects.all()
 
 
-class ObtainToken(ObtainAuthToken):
-
-    def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.DATA)
-        if serializer.is_valid():
-            token, created = Token.objects.get_or_create(user=serializer.object['user'])
-            print '{} just attempted to retrieve a token'.format(serializer.object['user'])
-            return Response({'token': token.key})
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# class ObtainToken(ObtainAuthToken):
+#
+#     def post(self, request, *args, **kwargs):
+#         serializer = self.serializer_class(data=request.DATA)
+#         if serializer.is_valid():
+#             token, created = Token.objects.get_or_create(user=serializer.object['user'])
+#             print '{} just attempted to retrieve a token'.format(serializer.object['user'])
+#             return Response({'token': token.key})
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

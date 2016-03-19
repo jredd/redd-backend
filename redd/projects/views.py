@@ -15,3 +15,7 @@ class ProjectList(generics.ListCreateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
 
 
+class ProjectDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.Project.objects.all()
+    serializer_class = serializers.ProjectSerializers
+    permission_classes = (permissions.IsAuthenticated,)

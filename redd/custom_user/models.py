@@ -69,8 +69,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
-    salary = models.IntegerField(default=0)
-    wage = models.IntegerField(default=0)
+    salary = models.IntegerField(null=True)
+    wage = models.IntegerField(null=True)
     # average_task_completion_time =
     current_assignments = models.ManyToManyField(Task)
     departments = models.ManyToManyField(Department)
