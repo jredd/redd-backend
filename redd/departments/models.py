@@ -16,7 +16,6 @@ class Department(models.Model):
     description = models.CharField(max_length=500)
     icon = models.ImageField()
 
-
     def __unicode__(self):
         return self.name
 
