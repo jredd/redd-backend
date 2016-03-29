@@ -26,10 +26,6 @@ class CustomUserCreationForm(UserCreationForm):
     def clean_username(self):
         pass
 
-    password1 = forms.CharField(label=_("Password"))
-    password2 = forms.CharField(label=_("Password confirmation"),
-                                help_text=_("Enter the same password as above, for verification."))
-
     class Meta:
         model = CustomUser
         fields = ("email",)
