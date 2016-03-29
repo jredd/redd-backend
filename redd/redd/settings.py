@@ -106,12 +106,12 @@ APEND_SLASH = True
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'redd',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'redd',
+#     }
+# }
 
 
 # Password validation
@@ -153,3 +153,9 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (BASE_DIR, 'static')
+
+try:
+    import local_settings
+except:
+    print ('No local settings file')
+    pass
