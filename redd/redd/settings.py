@@ -155,7 +155,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (BASE_DIR, 'static')
 
 try:
-    import local_settings
+    from local_settings import *
 except:
     print ('No local settings file')
     pass
