@@ -9,19 +9,21 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ('email',
-                  'first_name',
-                  'last_name',
-                  'is_active',
-                  'is_staff',
-                  'date_joined',
-                  'is_superuser',
-                  'salary',
-                  'wage',
-                  'current_assignments',
-                  'departments',
-                  'projects',
-                  'avatar'
+        fields = (
+            'id',
+            'email',
+            'first_name',
+            'last_name',
+            'is_active',
+            'is_staff',
+            'date_joined',
+            'is_superuser',
+            'salary',
+            'wage',
+            'current_assignments',
+            'departments',
+            'projects',
+            'avatar'
                   # 'groups',
         )
 
