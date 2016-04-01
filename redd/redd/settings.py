@@ -96,9 +96,16 @@ REST_FRAMEWORK = {
 }
 
 AUTH_USER_MODEL = 'custom_user.CustomUser'
-JWT_ALLOW_REFRESH = True
-JWT_LEEWAY = 60
 
+JWT_AUTH = {
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_LEEWAY': 60,
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'custom_user.views.jwt_response_payload_handler'
+}
+
+# JWT_ALLOW_REFRESH = True
+# JWT_LEEWAY = 60
+# JWT_RESPONSE_PAYLOAD_HANDLER = 'turtles'
 WSGI_APPLICATION = 'redd.wsgi.application'
 
 SITE_ID = 1

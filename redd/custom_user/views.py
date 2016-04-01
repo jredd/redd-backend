@@ -5,8 +5,10 @@ from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import resolve_url
-from django.http import HttpResponse
+# from rest_framework_jwt.views import obtain_jwt_token
 
+from django.http import HttpResponse
+# from rest_framework_jwt.utils.jwt_response_payload_handler
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework import generics, permissions
@@ -90,6 +92,12 @@ class UsersList(generics.ListCreateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     queryset = CustomUser.objects.all()
 
+
+def jwt_response_payload_handler(token, user=None, request=None):
+    return {
+        'token': token,
+        'id': UserSerializer(user).data['id']
+    }
 
 # class ObtainToken(ObtainAuthToken):
 #
