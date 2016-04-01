@@ -83,8 +83,8 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         """Lists all the info for the given user"""
-        user = self.kwargs['pk']
-        return CustomUser.objects.filter(email=user)
+        user_id = self.kwargs['pk']
+        return CustomUser.objects.filter(id=user_id)
 
 
 class UsersList(generics.ListCreateAPIView):
