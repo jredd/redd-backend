@@ -51,7 +51,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     a full-length email field as the username.
     Email and password are required. Other fields are optional.
     """
-    email = models.EmailField(max_length=254, unique=True, primary_key=True)
+    email = models.EmailField(max_length=254, unique=True)
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
     is_staff = models.BooleanField(_('staff status'),
