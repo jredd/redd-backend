@@ -11,7 +11,7 @@ class Project(models.Model):
     date_created = models.DateTimeField('date created', auto_now_add=True)
     is_active = models.BooleanField(default=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='project_creator', verbose_name='Owner')
-    current_client = models.ForeignKey('clients.Client', default=None, blank=True)
+    current_client = models.ForeignKey('clients.Client', null=True, blank=True)
     icon = models.ImageField(default=None, null=True, blank=True)
 
     def __unicode__(self):
