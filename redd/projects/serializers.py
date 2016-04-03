@@ -10,7 +10,7 @@ class ProjectSerializers(serializers.ModelSerializer):
     class Meta:
 
         model = models.Project
-        # name = serializers.CharField()
+        current_client = serializers.CharField(required=False)
         fields = (
             'id',
             'name',
@@ -18,5 +18,5 @@ class ProjectSerializers(serializers.ModelSerializer):
             'is_active',
             'created_by',
             'icon',
-            'current_client',
+            # 'current_client',
         )
