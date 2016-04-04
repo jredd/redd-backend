@@ -137,7 +137,7 @@ class CustomUserAdmin(UserAdmin):
             'adminForm': adminForm,
             'form_url': form_url,
             'form': form,
-            'is_popup': IS_POPUP_VAR in request.REQUEST,
+            'is_popup': IS_POPUP_VAR in request,
             'add': True,
             'change': False,
             'has_delete_permission': False,

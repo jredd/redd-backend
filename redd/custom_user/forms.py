@@ -81,8 +81,8 @@ class CustomAdminPasswordChangeForm(AdminPasswordChangeForm):
     def __init__(self, *args, **kargs):
         super(CustomAdminPasswordChangeForm, self).__init__(*args, **kargs)
 
-    password1 = forms.CharField(label=_("Password"))
-    password2 = forms.CharField(label=_("Password (again)"))
+    # password1 = forms.CharField(label=_("Password"))
+    # password2 = forms.CharField(label=_("Password (again)"))
 
 
 class CustomUserChangeForm(UserChangeForm):
