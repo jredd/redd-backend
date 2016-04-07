@@ -12,7 +12,10 @@ class Department(models.Model):
     date_created = models.DateTimeField('date created', auto_now_add=True)
     is_active = models.BooleanField(default=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='department_creator', verbose_name='Owner')
-    project = models.ManyToManyField(Project, verbose_name="list of projects")
+    project = models.ManyToManyField(Project,
+                                     verbose_name="list of projects",
+                                     blank=True
+                                     )
     description = models.CharField(max_length=500)
     icon = models.ImageField(default=None, null=True, blank=True)
 
