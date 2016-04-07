@@ -14,7 +14,7 @@ class Department(models.Model):
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='department_creator', verbose_name='Owner')
     project = models.ManyToManyField(Project, verbose_name="list of projects")
     description = models.CharField(max_length=500)
-    icon = models.ImageField()
+    icon = models.ImageField(default=None, null=True, blank=True)
 
     def __unicode__(self):
         return self.name
