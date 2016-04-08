@@ -13,7 +13,7 @@ class Asset(models.Model):
     date_created = models.DateTimeField('date created', auto_now_add=True)
     created_by = models.ForeignKey(User, related_name='asset_creator', verbose_name='Owner')
     project = models.ForeignKey(Project)
-    current_department = models.ManyToManyField(Department, verbose_name="list of departments")
+    current_department = models.ManyToManyField(Department, verbose_name="list of departments", blank=True)
 
     def __unicode__(self):
         return self.name
@@ -27,7 +27,11 @@ class SubAsset(models.Model):
     created_by = models.ForeignKey(User, related_name='sub_asset_creator', verbose_name='Owner')
     parent_asset = models.ForeignKey(Asset)
     checked_out = models.BooleanField(default=False)
-    current_checked_out_user = models.ForeignKey(User, related_name='temp_owner', verbose_name='temp-owner')
+    current_checked_out_user = models.ForeignKey(
+        User,
+        related_name='temp_owner',
+        verbose_name='temp-owner',
+        blank=True, null=True)
     location = models.FilePathField(allow_folders=False)
     # type = models.CharField()
     current_department = models.ForeignKey(Department)
