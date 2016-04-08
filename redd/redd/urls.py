@@ -32,6 +32,7 @@ urlpatterns = [
     url(r'^users/', include('custom_user.urls', namespace='custom_user')),
 
     # Applications
+    url(r'^assets/', include('assets.urls', namespace='projects')),
     url(r'^projects/', include('projects.urls', namespace='projects')),
     url(r'^departments/', include('departments.urls', namespace='departments')),
     url(r'^tasks/', include('tasks.urls', namespace='tasks')),
