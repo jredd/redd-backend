@@ -10,7 +10,7 @@ class Client(models.Model):
     name = models.CharField('name', max_length=80, unique=True, blank=True)
     date_created = models.DateTimeField('date created', auto_now_add=True)
     # created_by = models.ForeignKey(CustomUser, related_name='asset_creator', verbose_name='Owner')
-    current_project = models.ManyToManyField(Project, )
+    current_project = models.ManyToManyField(Project, blank=True)
     # account_manager =
     description = models.CharField('description', max_length=150)
     address = models.CharField('address', max_length=40)
