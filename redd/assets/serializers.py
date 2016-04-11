@@ -28,7 +28,7 @@ class SubAssetSerializers(serializers.ModelSerializer):
             'date_created',
             'last_modified',
             'created_by',
-            'check_out',
+            'checked_out',
             'current_checked_out_user'
             'project',
             'location',
