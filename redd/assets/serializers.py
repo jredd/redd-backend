@@ -29,7 +29,7 @@ class SubAssetSerializers(serializers.ModelSerializer):
             'last_modified',
             'created_by',
             'checked_out',
-            'current_checked_out_user'
+            'current_checked_out_user',
             'project',
             'location',
             'current_department',
