@@ -30,7 +30,7 @@ class SubAssetSerializers(serializers.ModelSerializer):
             'created_by',
             'checked_out',
             'current_checked_out_user',
-            # 'project',
+            'parent_asset',
             'location',
             'current_department',
         )
